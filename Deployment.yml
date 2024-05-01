@@ -1,0 +1,20 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+   name: devprojectdeployment
+spec:
+   replicas: 2
+   selector:      # tells the controller which pods to watch/belong to
+    matchLabels:
+     app: devprojectpods
+   template:
+      metadata:
+        labels:
+          app: devprojectpods
+      spec:
+       containers:
+        - name: devprojectcontainer
+          image: ankitsharmaa/job_name.v1.31
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 80
