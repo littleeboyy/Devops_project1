@@ -1,17 +1,9 @@
-FROM centos
-MAINTAINER ankitrial7@gmail.com
-RUN cd /etc/yum.repos.d/
-RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
-RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
-RUN yum -y install java
-CMD /bin/bash
-RUN yum install -y httpd
-RUN yum install -y zip
-RUN yum install -y unzip
-ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /var/www/html/
-WORKDIR /var/www/html/
-RUN sh -c 'unzip -q "*.zip"'
-RUN cp -rvf photogenic/* .
-RUN rm -rf photogenic photogenic.zip
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+FROM ubuntu:22.04
+MAINTAINER Ankit_Sharma
+RUN apt-get update -y && apt-get install git nginx zip curl -y
+RUN echo "deamon off:"  >> /etc/nginx/nginx.conf
+RUN curl -o /var/www/html/master.zip -L https://codecloud.github.com/gabrielecirulli/2048/zip/master 
+RUN cd /var/www/html/ && unzip master.zip && mv 2048-master/* . && rm -rf 2048-master.zip
 EXPOSE 80
+CMD [ "/usr/sbin/nginx" ,"-c" ,"/etc/nginx/nginx.conf"]
+
