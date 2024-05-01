@@ -14,7 +14,7 @@ spec:
       spec:
        containers:
         - name: devprojectcontainer
-          image: ankitsharmaa/job_name.v1.31
+          image: ankitsharmaa/job_name.v1.${BUILD_ID} 
           imagePullPolicy: Always
           ports:
           - containerPort: 80
